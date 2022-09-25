@@ -78,28 +78,28 @@ const Detail = ({ postDetails }: IProps) => {
   return (
     <>
       {post && (
-        <div className='flex w-full absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap'>
-          <div className='relative flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center bg-blurred-img bg-no-repeat bg-cover bg-center'>
+        <div className='flex w-full absolute  left-0 top-0 bg-white flex-wrap lg:flex-nowrap'>
+          <div className='relative lg:h-[100vh] flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center bg-blurred-img bg-no-repeat bg-cover bg-center'>
             <div className='opacity-90 absolute top-6 left-2 lg:left-6 flex gap-6 z-50'>
               <p className='cursor-pointer ' onClick={() => router.back()}>
                 <MdOutlineCancel className='text-white text-[35px] hover:opacity-90' />
               </p>
             </div>
             <div className='relative'>
-              <div className='lg:h-[100vh] h-[80vh] top-5 lg:bottom-24 relative'>
+              <div className='lg:h-[100vh] w-full h-[80vh] bottom-6 lg:block lg:top-28 md:flex md:items-center mt-10 lg:bottom-24 relative'>
                 <video
                   ref={videoRef}
                   onClick={onVideoClick}
                   loop
                   src={post?.video?.asset.url}
-                  className=' h-[370px] cursor-pointer relative lg:bottom-32'
+                  className=' h-[400px] cursor-pointer relative lg:bottom-32'
                 ></video>
               </div>
 
-              <div className='absolute lg:top-[10%] lg:left-[35%] left-[40%] top-[44%]  cursor-pointer'>
+              <div className='absolute lg:top-[47%] lg:left-[44%] left-[40%] top-[44%]  cursor-pointer'>
                 {!isPlaying && (
                   <button onClick={onVideoClick}>
-                    <BsFillPlayFill className='text-white text-6xl lg:text-8xl' />
+                    <BsFillPlayFill className='text-white text-6xl lg:text-5xl' />
                   </button>
                 )}
               </div>
@@ -117,7 +117,7 @@ const Detail = ({ postDetails }: IProps) => {
             </div>
           </div>
           <div className='relative w-[1000px] md:w-[900px] lg:w-[700px]'>
-            <div className='lg:mt-20 mt-10'>
+            <div className='lg:mt-5 mt-10'>
               <Link href={`/profile/${post.postedBy._id}`}>
                 <div className='flex gap-4 mb-4 bg-white w-full pl-10 cursor-pointer'>
                   <Image
@@ -139,7 +139,7 @@ const Detail = ({ postDetails }: IProps) => {
               <div className='px-10'>
                 <p className=' text-md text-gray-600'>{post.caption}</p>
               </div>
-              <div className='mt-10 px-10'>
+              <div className='mt-0 px-10'>
                 {userProfile && <LikeButton
                   likes={post.likes}
                   flex='flex'

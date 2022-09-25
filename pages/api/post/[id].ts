@@ -4,7 +4,7 @@ import { postDetailQuery } from './../../../utils/queries';
 import { client } from '../../../utils/client';
 import { uuid } from 'uuidv4';
 
-export default async function handler( req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     const { id } = req.query;
     const query = postDetailQuery(id);
@@ -13,9 +13,10 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
 
     res.status(200).json(data[0]);
   } else if (req.method === 'PUT') {
-    const { comment, userId } = req.body;
+    const { comment, userId, data: res } = req.body;
 
     const { id }: any = req.query;
+    console.log('==', res, id);
 
     const data = await client
       .patch(id)
@@ -29,6 +30,13 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
       ])
       .commit();
 
+
     res.status(200).json(data);
   }
+  else if (req.method === 'DELETE') {
+    const { id } = req.query;
+    const { data } = req.body;
+    console.log('work',id)
+  }
+
 }
