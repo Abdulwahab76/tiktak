@@ -1,23 +1,29 @@
-import React from 'react';
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
 
-import VideoCard from '../components/VideoCard';
-import { BASE_URL } from '../utils';
-import { Video } from '../types';
-import NoResults from '../components/NoResults';
+import VideoCard from "../components/VideoCard";
+import { BASE_URL } from "../utils";
+import { Video } from "../types";
+import NoResults from "../components/NoResults";
 
 interface IProps {
   videos: Video[];
 }
 
 const Home = ({ videos }: IProps) => {
+  // React.useEffect(() => {
+  //   console.log(videos);
+  // }, [videos]);
+
   return (
-    <div className='flex flex-col gap-10 videos h-full  '>
-      {videos.length 
-        ? videos?.map((video: Video) => (
-          <VideoCard post={video} isShowingOnHome key={video._id} />
-        )) 
-        : <NoResults text={`No Videos`} />}
+    <div className="flex flex-col gap-10 videos h-full  ">
+      {videos.length ? (
+        videos?.map((video: Video) => (
+          <VideoCard post={video} videos={videos} isShowingOnHome key={video._id} />
+        ))
+      ) : (
+        <NoResults text={`No Videos`} />
+      )}
     </div>
   );
 };
@@ -31,10 +37,10 @@ export const getServerSideProps = async ({
 }) => {
   let response = await axios.get(`${BASE_URL}/api/post`);
 
-  if(topic) {
+  if (topic) {
     response = await axios.get(`${BASE_URL}/api/discover/${topic}`);
   }
-  
+
   return {
     props: { videos: response.data },
   };

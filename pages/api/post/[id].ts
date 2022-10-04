@@ -13,10 +13,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     res.status(200).json(data[0]);
   } else if (req.method === 'PUT') {
-    const { comment, userId, data: res } = req.body;
+    const { comment, userId } = req.body;
 
     const { id }: any = req.query;
-    console.log('==', res, id);
+
 
     const data = await client
       .patch(id)
@@ -34,9 +34,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(200).json(data);
   }
   else if (req.method === 'DELETE') {
-    const { id } = req.query;
-    const { data } = req.body;
-    console.log('work',id)
+    const { id }: any = req.query
+
+    client.delete(id).then(console.log).catch(console.error);
+    res.status(200).json('Delete Success');
   }
 
 }

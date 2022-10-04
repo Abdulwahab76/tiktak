@@ -35,34 +35,24 @@ const Comments = ({
   const { allUsers, userProfile }: any = useAuthStore();
   const [data, setData] = React.useState<any>(comments);
 
-  let deleteComment = async (key: any, id: any) => {
-    setData(data.filter((x: IComment) => x._key !== key));
-    // client
-    //   .delete({query: `*[_type == 'post'][0...20].${id}`})
-    //   .then(console.log)
-    //   .catch(console.error);
+  let deleteComment = async (key: any) => {
+    // setData(data.filter((x: IComment) => x._key !== key));
+    client.delete(key).then(console.log).catch(console.error);
 
-    // client
-    //   .patch(id)
-    //   .unset([`comments[_key==${key}]`])
-    //   .commit().then((data) =>{
-    //     console.log('work',data)
-    //   }).catch((err) =>{
-    //     console.log('errr',err)
-    //   });
-   
-
-
-    console.log(id, key);
+    console.log(key);
   };
 
-  console.log(data);
-
+  console.log("===", data);
+let matching = ()=>{
+  let allData = allUsers.filter((user:any)=> user._id == userProfile._id)
+  console.log('data--',allData)
+}
+matching()
   return (
     <div className="border-t-2 border-gray-200  flex flex-col lg:h-[240px] pt-4 px-10 mt-4 bg-[#F8F8F8] border-b-2 lg:pb-0 pb-[100px]">
       <div className="overflow-scroll lg:h-[457px] ">
-        {data?.length > 0 ? (
-          data?.map((item: IComment, idx: number) => (
+        {comments?.length > 0 ? (
+          comments?.map((item: IComment, idx: number) => (
             <>
               {allUsers?.map(
                 (user: IUser) =>
@@ -89,9 +79,13 @@ const Comments = ({
                           </>
                         </Link>
                         <div className="flex justify-end lg:w-[48%] w-[20%] md:w-[100%] cursor-pointer">
-                          <AiOutlineDelete
-                            onClick={() => deleteComment(item._key, user._id)}
-                          />
+                          {allUsers.filter(
+                            (user: any) => user._id == userProfile._id
+                          ) ? (
+                            <AiOutlineDelete
+                              onClick={() => deleteComment(item._key)}
+                            />
+                          ): null}
                         </div>
                       </div>
 
